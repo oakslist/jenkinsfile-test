@@ -2,9 +2,11 @@
 def deployTarget = [
         'develop': 'localhost'
 ]
-def project_name = 'jenkinsfile-test'
+//def project_name = 'jenkinsfile-test'
 def project_binary_file_extension = 'jar'
 def project_binary_source_directory = 'target'
+def project_name = readMavenPom().getArtifactId()
+def project_version = readMavenPom().getVersion()
 
 properties([
         buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '3')),
@@ -21,7 +23,7 @@ try {
         stage('Build') {
             bat "mvn --batch-mode -V -U -e -Dmaven.test.failure.ignore=false clean install"
             if (isBuildOK()) {
-                stash name: 'buildArtifact', includes: "${project_binary_source_directory}/${project_name}*.${project_binary_file_extension}"
+                stash name: 'buildArtifact', includes: "${project_binary_source_directory}/${project_name}-${project_version}.${project_binary_file_extension}"
             }
         }
     }
@@ -30,7 +32,7 @@ try {
             stage("Deploy") {
                 unstash name: 'buildArtifact'
                 echo "Deployment..."
-                bat "java -jar ${project_binary_source_directory}/${project_name}*.${project_binary_file_extension}"
+                bat "java -jar ${project_binary_source_directory}/${project_name}-${project_version}.${project_binary_file_extension}"
                 echo "Deployment finished."
             }
         }
