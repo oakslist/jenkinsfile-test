@@ -5,9 +5,9 @@ def deployTarget = [
 //def project_name = 'jenkinsfile-test'
 def project_binary_file_extension = 'jar'
 def project_binary_source_directory = 'target'
-def pom = readMavenPom file: 'pom.xml'
-def project_name = pom.artifactId
-def project_version = pom.version
+//def pom = readMavenPom file: 'pom.xml'
+//def project_name = pom.artifactId
+//def project_version = pom.version
 //def project_name = readMavenPom().getArtifactId()
 //def project_version = readMavenPom().getVersion()
 
@@ -18,6 +18,9 @@ properties([
 ])
 
 try {
+    pom = readMavenPom file: 'pom.xml'
+    project_name = pom.artifactId
+    project_version = pom.version
     node {
         currentBuild.result = 'SUCCESS'
         stage('Checkout') {
