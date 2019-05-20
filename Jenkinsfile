@@ -13,7 +13,7 @@ properties([
 ])
 
 try {
-    node('build') {
+    node {
         currentBuild.result = 'SUCCESS'
         stage('Checkout') {
             checkout scm
@@ -26,7 +26,7 @@ try {
         }
     }
     if (isBuildOK()) {
-        node('build') {
+        node {
             stage("Deploy") {
                 unstash name: 'buildArtifact'
                 echo "Deployment..."
