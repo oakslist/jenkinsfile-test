@@ -2,10 +2,11 @@
 def deployTarget = [
         'develop': 'localhost'
 ]
-//def project_name = 'jenkinsfile-test'
 def project_binary_file_extension = 'jar'
 def project_binary_source_directory = 'target'
-def project_name = 'jenkinsfile-test'
+def util_module_project_name = 'util-module'
+def web_module_project_name = 'web-module'
+def web2_module_project_name = 'web2-module'
 def project_version = '0.0.1-SNAPSHOT'
 
 properties([
@@ -19,20 +20,36 @@ try {
         currentBuild.result = 'SUCCESS'
         stage('Checkout') {
             checkout scm
+            def changeLogSets = currentBuild.changeSets
+            for (int i = 0; i < changeLogSets.size(); i++) {
+                def entries = changeLogSets[i].items
+                for (int j = 0; j < entries.length; j++) {
+                    def entry = entries[j]
+                    echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
+                    def files = new ArrayList(entry.affectedFiles)
+                    for (int k = 0; k < files.size(); k++) {
+                        def file = files[k]
+                        echo "  ${file.editType.name} ${file.path}"
+                    }
+                }
+            }
         }
         stage('Build') {
-            bat "mvn --batch-mode -V -U -e -Dmaven.test.failure.ignore=false clean install"
-            if (isBuildOK()) {
-                stash name: 'buildArtifact', includes: "${project_binary_source_directory}/${project_name}-${project_version}.${project_binary_file_extension}"
-            }
+            echo "Build..."
+//            bat "mvn --batch-mode -V -U -e -Dmaven.test.failure.ignore=false clean install"
+//            if (isBuildOK()) {
+//                stash name: 'utilModuleArtifact', includes: "${util_module_project_name}/${project_binary_source_directory}/${util_module_project_name}-${project_version}.${project_binary_file_extension}"
+//                stash name: 'webModuleArtifact', includes: "${web_module_project_name}/${project_binary_source_directory}/${web_module_project_name}-${project_version}.${project_binary_file_extension}"
+//                stash name: 'we2ModuleArtifact', includes: "${web2_module_project_name}/${project_binary_source_directory}/${web2_module_project_name}-${project_version}.${project_binary_file_extension}"
+//            }
         }
     }
     if (isBuildOK()) {
         node {
             stage("Deploy") {
-                unstash name: 'buildArtifact'
+//                unstash name: 'buildArtifact'
                 echo "Deployment..."
-                bat "java -jar ${project_binary_source_directory}/${project_name}-${project_version}.${project_binary_file_extension}"
+//                bat "java -jar ${project_binary_source_directory}/${project_name}-${project_version}.${project_binary_file_extension}"
                 echo "Deployment finished."
             }
         }
