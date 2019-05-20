@@ -32,7 +32,7 @@ try {
             stage("Deploy") {
                 unstash name: 'buildArtifact'
                 echo "Deployment..."
-                bat "java -jar ${project_binary_source_directory}/${project_name}-${project_version}.${project_binary_file_extension}"
+//                bat "java -jar ${project_binary_source_directory}/${project_name}-${project_version}.${project_binary_file_extension}"
                 echo "Deployment finished."
             }
         }
