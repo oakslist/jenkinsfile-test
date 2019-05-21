@@ -47,7 +47,7 @@ try {
                             def file = files[k]
                             echo "  ${file.editType.name} ${file.path}"
                             if ("${file.path}".startsWith("${util_module_project_name}")) {
-                                affectedModuleSet.add(${util_module_project_name}.toString())
+                                affectedModuleSet.add("${util_module_project_name}".toString())
                             }
 //                            if ("${file.path}".startsWith("${web_module_project_name}")) {
 //                                affectedModuleSet.add(${web_module_project_name})
@@ -59,13 +59,14 @@ try {
                         }
                     }
                 }
+                echo "Deployment 1..."
                 affectedModuleSet.each {
                     echo "In affectedModuleSet.each..."
                     echo it
                     println it
                 }
 //                unstash name: 'buildArtifact'
-                echo "Deployment..."
+                echo "Deployment 2..."
 //                bat "java -jar ${project_binary_source_directory}/${project_name}-${project_version}.${project_binary_file_extension}"
                 echo "Deployment finished."
             }
