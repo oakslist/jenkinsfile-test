@@ -58,15 +58,15 @@ try {
                 }
                 echo "Deployment..."
                 affectedModuleSet.each {
-                    if (${util_module_project_name}.toString() == ${it}.toString()) {
+                    if (util_module_project_name == it) {
                         echo "Deploy ${it} module"
                         unstash name: 'utilModuleArtifact'
                     }
-                    if (${web_module_project_name}.toString() == ${it}.toString()) {
+                    if (web_module_project_name == it) {
                         echo "Deploy ${it} module"
                         unstash name: 'webModuleArtifact'
                     }
-                    if (${web2_module_project_name}.toString() == ${it}.toString()) {
+                    if (web2_module_project_name == it) {
                         echo "Deploy ${it} module"
                         unstash name: 'we2ModuleArtifact'
                     }
