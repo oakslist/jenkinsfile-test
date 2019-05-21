@@ -6,4 +6,5 @@ public class UtilClass {
         return number1 + number2;
     }
 
+    // comment for git changes 1
 }
