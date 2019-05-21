@@ -25,11 +25,11 @@ try {
         stage('Build') {
             echo "Build..."
             bat "mvn --batch-mode -V -U -e -Dmaven.test.failure.ignore=false clean install"
-//            if (isBuildOK()) {
-//                stash name: 'utilModuleArtifact', includes: "${util_module_project_name}/${project_binary_source_directory}/${util_module_project_name}-${project_version}.${project_binary_file_extension}"
-//                stash name: 'webModuleArtifact', includes: "${web_module_project_name}/${project_binary_source_directory}/${web_module_project_name}-${project_version}.${project_binary_file_extension}"
-//                stash name: 'we2ModuleArtifact', includes: "${web2_module_project_name}/${project_binary_source_directory}/${web2_module_project_name}-${project_version}.${project_binary_file_extension}"
-//            }
+            if (isBuildOK()) {
+                stash name: 'utilModuleArtifact', includes: "${util_module_project_name}/${project_binary_source_directory}/${util_module_project_name}-${project_version}.${project_binary_file_extension}"
+                stash name: 'webModuleArtifact', includes: "${web_module_project_name}/${project_binary_source_directory}/${web_module_project_name}-${project_version}.${project_binary_file_extension}"
+                stash name: 'we2ModuleArtifact', includes: "${web2_module_project_name}/${project_binary_source_directory}/${web2_module_project_name}-${project_version}.${project_binary_file_extension}"
+            }
         }
     }
     if (isBuildOK()) {
@@ -56,13 +56,21 @@ try {
                         }
                     }
                 }
-                echo "Deployment 1..."
+                echo "Deployment..."
                 affectedModuleSet.each {
-                    echo "In affectedModuleSet.each..."
-                    echo it
+                    if (${util_module_project_name}.toString() == ${it}.toString()) {
+                        echo "Deploy ${it} module"
+                        unstash name: 'utilModuleArtifact'
+                    }
+                    if (${web_module_project_name}.toString() == ${it}.toString()) {
+                        echo "Deploy ${it} module"
+                        unstash name: 'webModuleArtifact'
+                    }
+                    if (${web2_module_project_name}.toString() == ${it}.toString()) {
+                        echo "Deploy ${it} module"
+                        unstash name: 'we2ModuleArtifact'
+                    }
                 }
-//                unstash name: 'buildArtifact'
-                echo "Deployment 2..."
 //                bat "java -jar ${project_binary_source_directory}/${project_name}-${project_version}.${project_binary_file_extension}"
                 echo "Deployment finished."
             }
