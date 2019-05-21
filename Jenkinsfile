@@ -61,17 +61,17 @@ try {
                     if ("${util_module_project_name}".toString() == "${it}".toString()) {
 //                        echo "Deploy ${it} module"
                         echo it
-                        unstash name: 'utilModuleArtifact'
+//                        unstash name: 'utilModuleArtifact'
                     }
                     if ("${web_module_project_name}".toString() == "${it}".toString()) {
 //                        echo "Deploy ${it} module"
                         echo it
-                        unstash name: 'webModuleArtifact'
+//                        unstash name: 'webModuleArtifact'
                     }
                     if ("${web2_module_project_name}".toString() == "${it}".toString()) {
 //                        echo "Deploy ${it} module"
                         echo it
-                        unstash name: 'we2ModuleArtifact'
+//                        unstash name: 'we2ModuleArtifact'
                     }
                 }
 //                bat "java -jar ${project_binary_source_directory}/${project_name}-${project_version}.${project_binary_file_extension}"
