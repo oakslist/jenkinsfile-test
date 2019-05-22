@@ -4,7 +4,7 @@ public class UtilClass2 {
 
     // test private class for jenkins auto change
     private UtilClass2() {
-        // comment for git changes 14
+        // comment for git changes 15
     }
 
 }

@@ -59,17 +59,17 @@ try {
                 echo "Deployment..."
                 affectedModuleSet.each {
                     if ("${util_module_project_name}".toString() == "${it}".toString()) {
-                        echo "Deploy " it
+                        echo "Deploy " ${it}
 //                        unstash name: 'utilModuleArtifact'
                     }
                     if ("${web_module_project_name}".toString() == "${it}".toString()) {
 //                        echo "Deploy ${it} module"
-                        echo "Deploy " it
+                        echo "Deploy " ${it}
 //                        unstash name: 'webModuleArtifact'
                     }
                     if ("${web2_module_project_name}".toString() == "${it}".toString()) {
 //                        echo "Deploy ${it} module"
-                        echo "Deploy " it
+                        echo "Deploy " ${it}
 //                        unstash name: 'we2ModuleArtifact'
                     }
                 }
