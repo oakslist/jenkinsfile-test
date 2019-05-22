@@ -44,15 +44,9 @@ try {
                         for (int k = 0; k < files.size(); k++) {
                             def file = files[k]
                             echo "  ${file.editType.name} ${file.path}"
-                            if (file.path.startsWith(util_module_project_name)) {
-                                affectedModuleSet.add(util_module_project_name)
-                            }
-                            if (file.path.startsWith(web_module_project_name)) {
-                                affectedModuleSet.add(web_module_project_name)
-                            }
-                            if (file.path.startsWith(web2_module_project_name)) {
-                                affectedModuleSet.add(web2_module_project_name)
-                            }
+                            file.path.startsWith(util_module_project_name) ? affectedModuleSet.add(util_module_project_name) : ''
+                            file.path.startsWith(web_module_project_name) ? affectedModuleSet.add(web_module_project_name) : ''
+                            file.path.startsWith(web2_module_project_name) ? affectedModuleSet.add(web2_module_project_name) : ''
                         }
                     }
                 }
